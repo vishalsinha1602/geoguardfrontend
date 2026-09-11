@@ -1,32 +1,56 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-
 # GeoGuard
 
-# Real-Time Geofencing Live Device Tracking System
+## Real-Time Geofencing & Live Device Tracking System
 
-=======
+GeoGuard is a real-time geofencing and live device tracking system designed to monitor device locations and manage geographical boundaries efficiently.
 
-> > > > > > > 77699e1 (frontend)
+### Screenshot
 
-# React + Vite
+![alt text](image.png)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![alt text](image-1.png)
 
-Currently, two official plugins are available:
+![alt text](image-2.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Features
 
-## React Compiler ok
+- Real-time device location tracking
+- Geofencing support
+- Live location monitoring
+- Interactive maps
+- Secure backend API integration
+- User authentication and authorization
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Technology Stack
 
-## Expanding the ESLint configuration
+**Frontend**
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-<<<<<<< HEAD
+- React
+- Vite
+- Leaflet
 
-> > > > > > > # 77699e1 (frontend)
-> > > > > > >
-> > > > > > > 77699e1 (frontend)
+**Backend**
+
+- Spring Boot
+- PostgreSQL
+- AWS
+
+### Getting Started
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
+
+```bash
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+```
