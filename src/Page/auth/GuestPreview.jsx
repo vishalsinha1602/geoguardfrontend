@@ -10,7 +10,7 @@ const GuestPreview = () => (
   <main className="guest-preview">
     <header className="guest-preview__header">
       <Link to="/" className="guest-preview__brand">
-        <span><ShieldCheck size={21} /></span>GeoGuard
+        <span><img src="/geoguard-shield.svg" alt="" width="21" height="21" /></span>GeoGuard
       </Link>
       <nav aria-label="Guest preview navigation">
         <Link to="/">Home</Link>

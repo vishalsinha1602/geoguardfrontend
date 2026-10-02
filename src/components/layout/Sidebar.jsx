@@ -38,7 +38,7 @@ const Sidebar = () => {
       <div className="sidebar-brand border-b border-slate-800 p-6">
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600">
-            <ShieldCheck className="text-white" />
+            <img src="/geoguard-shield.svg" alt="" className="h-6 w-6" />
           </div>
 
           <div>

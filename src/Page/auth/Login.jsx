@@ -48,7 +48,7 @@ const Login = () => {
     <main className="login-page">
       <section className="login-story" aria-label="About GeoGuard">
         <Link to="/" className="login-brand">
-          <span className="login-brand__icon"><ShieldCheck size={22} /></span>
+          <span className="login-brand__icon"><img src="/geoguard-shield.svg" alt="" width="22" height="22" /></span>
           <span>GeoGuard</span>
         </Link>
 
@@ -71,7 +71,7 @@ const Login = () => {
       <section className="login-form-side" aria-labelledby="login-title">
         <div className="login-form-wrap">
           <Link to="/" className="login-brand login-brand--mobile">
-            <span className="login-brand__icon"><ShieldCheck size={22} /></span>
+            <span className="login-brand__icon"><img src="/geoguard-shield.svg" alt="" width="22" height="22" /></span>
             <span>GeoGuard</span>
           </Link>
 

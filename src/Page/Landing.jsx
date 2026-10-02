@@ -60,7 +60,7 @@ function Landing() {
       <header className="landing-header">
         <div className="landing-header__inner">
           <Link to="/" className="landing-brand" aria-label="GeoGuard home" onClick={closeMenu}>
-            <span className="landing-brand__mark"><ShieldCheck size={22} /></span>
+            <span className="landing-brand__mark"><img src="/geoguard-shield.svg" alt="" width="22" height="22" /></span>
             <span>GeoGuard</span>
           </Link>
 
@@ -167,7 +167,7 @@ function Landing() {
         <div className="landing-footer__main">
           <div className="landing-footer__brand">
             <Link to="/" className="landing-brand" aria-label="GeoGuard home">
-              <span className="landing-brand__mark"><ShieldCheck size={22} /></span>
+              <span className="landing-brand__mark"><img src="/geoguard-shield.svg" alt="" width="22" height="22" /></span>
               <span>GeoGuard</span>
             </Link>
             <p>Device locations and geofence activity, together in one dashboard.</p>
