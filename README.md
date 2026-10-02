@@ -5,6 +5,7 @@
 GeoGuard is a real-time geofencing and live device tracking system designed to monitor device locations and manage geographical boundaries efficiently.
 
 ### Screenshot
+<img width="1211" height="633" alt="image" src="https://github.com/user-attachments/assets/05099d62-e2ed-4b2e-bba1-fb2caad0238c" />
 
 ![alt text](image.png)
 
