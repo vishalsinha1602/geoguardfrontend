@@ -1,5 +1,6 @@
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "https://geoguard-backend.onrender.com";
+const API_BASE_URL = (
+  import.meta.env.VITE_API_BASE_URL || "https://geoguard-backend.onrender.com"
+).trim().replace(/\/+$/, "");
 
 export const API_URL = `${API_BASE_URL}/api/v1`;
 export const WS_URL = `${API_BASE_URL}/api/v1/ws`;
