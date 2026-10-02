@@ -7,7 +7,7 @@ const SummaryCard = ({
   alertCount,
 }) => {
   return (
-    <div className="grid grid-cols-4 gap-6">
+    <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4 xl:gap-6">
       {/* Devices */}
       <div className="bg-white rounded-3xl shadow-lg p-6">
         <div className="flex justify-between items-center">

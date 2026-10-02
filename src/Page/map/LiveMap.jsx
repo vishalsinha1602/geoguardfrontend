@@ -966,11 +966,11 @@ const LiveMap = () => {
             MAP + DEVICE INFO
         ==================================================== */}
 
-        <div className="grid grid-cols-12 gap-5">
+        <div className="live-map-overview grid grid-cols-12 gap-5">
           {/* MAP */}
 
           <div className="col-span-12 xl:col-span-8">
-            <div className="rounded-3xl overflow-hidden shadow-xl h-[620px]">
+            <div className="live-map-canvas rounded-3xl overflow-hidden shadow-xl h-[620px]">
               <MapView
                 selectedDevice={selectedDevice}
                 location={location}
@@ -990,7 +990,7 @@ const LiveMap = () => {
           {/* DEVICE INFO */}
 
           <div className="col-span-12 xl:col-span-4">
-            <div className="rounded-3xl border shadow-xl h-[620px] overflow-auto">
+            <div className="live-map-device-info rounded-3xl border shadow-xl h-[620px] overflow-auto">
               <DeviceInfo selectedDevice={selectedDevice} location={location} />
             </div>
           </div>

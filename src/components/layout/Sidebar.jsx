@@ -32,10 +32,10 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="flex h-full flex-col border-r border-olive-400">
+    <div className="dashboard-sidebar flex h-full flex-col border-r border-olive-400">
       {/* Logo */}
 
-      <div className="border-b border-slate-800 p-6">
+      <div className="sidebar-brand border-b border-slate-800 p-6">
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600">
             <ShieldCheck className="text-white" />
@@ -51,7 +51,7 @@ const Sidebar = () => {
 
       {/* Menu */}
 
-      <nav className="flex-1 p-4 space-y-5">
+      <nav className="dashboard-nav flex-1 p-4 space-y-5">
         {menus.map((item) => {
           const Icon = item.icon;
 
@@ -60,7 +60,7 @@ const Sidebar = () => {
               key={item.name}
               to={item.path}
               className={({ isActive }) =>
-                `flex items-center gap-3 rounded-xl px-4 py-3 transition-all ${
+                `dashboard-nav-link flex items-center gap-3 rounded-xl px-4 py-3 transition-all ${
                   isActive
                     ? "bg-blue-600 text-white shadow-lg"
                     : "text-slate-300 hover:bg-slate-800"
@@ -77,7 +77,7 @@ const Sidebar = () => {
 
       {/* Bottom */}
 
-      <div className="border-t border-slate-800 p-5">
+      <div className="sidebar-footer border-t border-slate-800 p-5">
         <div className="rounded-xl bg-slate-800 p-4">
           <h3 className="font-semibold text-white">GeoGuard</h3>
 

@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../utils/auth";
-import { jwtDecode } from "jwt-decode";
 import { Bell, LogOut } from "lucide-react";
 
 const Navbar = () => {
@@ -12,7 +11,7 @@ const Navbar = () => {
   };
 
   return (
-    <header className="h-20 bg-[#1E293B] border-b border-slate-800 px-8 flex items-center justify-between">
+    <header className="dashboard-navbar h-20 bg-[#1E293B] border-b border-slate-800 px-8 flex items-center justify-between">
       {/* Left */}
 
       <div>
@@ -21,7 +20,7 @@ const Navbar = () => {
 
       {/* Right */}
 
-      <div className="flex items-center gap-10">
+      <div className="dashboard-navbar-actions flex items-center gap-10">
         <button className="relative p-2 rounded-xl bg-slate-800 hover:bg-slate-700 transition">
           <Bell className="text-white" size={20} />
 
