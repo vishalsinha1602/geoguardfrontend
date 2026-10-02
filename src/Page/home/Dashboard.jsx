@@ -7,6 +7,7 @@ import DeviceStatus from "./DeviceStatus";
 import QuicAction from "./QuicAction";
 
 import { getDevices } from "../../api/deviceApi";
+import { getAlerts } from "../../api/alertApi";
 import {
   connectWebSocket,
   disconnectWebSocket,
@@ -25,24 +26,35 @@ const Dashboard = () => {
 
   const offlineDevices = totalDevices - onlineDevices;
 
-  // ============================
-  // Load Devices
-  // ============================
-
-  const loadDevices = async () => {
-    try {
-      const response = await getDevices();
-
-      setDevices(response.data.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    loadDevices();
+    getDevices()
+      .then(async (response) => {
+        const deviceList = response.data.data;
+        setDevices(deviceList);
+
+        const alertGroups = await Promise.all(
+          deviceList.map(async (device) => {
+            try {
+              const alertResponse = await getAlerts(device.publicId);
+              return (alertResponse.data.data || []).map((alert) => ({
+                ...alert,
+                deviceName: device.name,
+              }));
+            } catch (error) {
+              console.error(`Could not load alerts for ${device.name}:`, error);
+              return [];
+            }
+          }),
+        );
+
+        setAlerts(
+          alertGroups
+            .flat()
+            .sort((first, second) => new Date(second.createdAt) - new Date(first.createdAt)),
+        );
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
   }, []);
 
   // ============================
@@ -53,7 +65,7 @@ const Dashboard = () => {
     if (loading) return;
 
     connectWebSocket(
-      null,
+      devices.map((device) => device.publicId),
 
       () => {},
 
@@ -65,15 +77,16 @@ const Dashboard = () => {
           (d) => d.publicId === liveAlert.devicePublicId,
         );
 
-        setAlerts((prev) => [
-          {
-            ...liveAlert,
-
-            deviceName: device?.name || "Unknown Device",
-          },
-
-          ...prev,
-        ]);
+        setAlerts((prev) => {
+          if (prev.some((alert) => alert.id === liveAlert.id)) return prev;
+          return [
+            {
+              ...liveAlert,
+              deviceName: device?.name || "Unknown Device",
+            },
+            ...prev,
+          ];
+        });
       },
     );
 

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import QRCode from "react-qr-code";
 
-import { createDevice } from "../../api/deviceApi";
+import { createDevice, issueDeviceKey } from "../../api/deviceApi";
 
 const CreateDevice = () => {
   const navigate = useNavigate();
@@ -20,6 +20,8 @@ const CreateDevice = () => {
   const [createdDevice, setCreatedDevice] = useState(null);
 
   const [loading, setLoading] = useState(false);
+  const [deviceKey, setDeviceKey] = useState("");
+  const [keyLoading, setKeyLoading] = useState(false);
 
   // ==============================
   // Handle Input
@@ -82,14 +84,40 @@ const CreateDevice = () => {
 
       // Save Created Device
       setCreatedDevice(created);
+      if (created.type === "ESP32" || created.type === "GPS_TRACKER") {
+        await handleIssueDeviceKey(created.publicId);
+      }
     } catch (error) {
       console.error("❌ Create Device Error:", error);
 
       console.error("Backend Response:", error?.response?.data);
 
-      alert(error?.response?.data?.message || "Unable to create device");
+      const status = error?.response?.status;
+      const backendMessage =
+        error?.response?.data?.error?.message ||
+        error?.response?.data?.message;
+
+      if (status === 401) {
+        alert("Your login session expired after switching the local backend database. Log out, then sign in again with the account in the Render database.");
+      } else {
+        alert(backendMessage || `Unable to create device${status ? ` (HTTP ${status})` : ""}`);
+      }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleIssueDeviceKey = async (publicId = createdDevice?.publicId) => {
+    if (!publicId) return;
+    try {
+      setKeyLoading(true);
+      const keyResponse = await issueDeviceKey(publicId);
+      setDeviceKey(keyResponse?.data?.data?.deviceKey || keyResponse?.data?.deviceKey || "");
+    } catch (error) {
+      console.error("Device key issue failed:", error?.response?.data || error);
+      alert("Device was created, but its IoT key could not be issued. Tap Generate IoT Key to retry.");
+    } finally {
+      setKeyLoading(false);
     }
   };
 
@@ -126,6 +154,7 @@ const CreateDevice = () => {
 
   const handleCreateAnother = () => {
     setCreatedDevice(null);
+    setDeviceKey("");
 
     setDevice({
       name: "",
@@ -209,6 +238,7 @@ const CreateDevice = () => {
 
                 <option value="VEHICLE">Vehicle</option>
 
+                <option value="GPS_TRACKER">GPS Tracker</option>
                 <option value="ESP32">ESP32</option>
               </select>
             </div>
@@ -285,7 +315,9 @@ const CreateDevice = () => {
                   mt-1
                 "
               >
-                Scan this QR code from the phone you want to connect.
+                {createdDevice.type === "ESP32" || createdDevice.type === "GPS_TRACKER"
+                  ? "Use the ID and key below to connect your Rakshak ESP32."
+                  : "Scan this QR code from the phone you want to connect."}
               </p>
             </div>
 
@@ -377,7 +409,9 @@ const CreateDevice = () => {
                   text-center
                 "
               >
-                Scan to Connect
+                {createdDevice.type === "ESP32" || createdDevice.type === "GPS_TRACKER"
+                  ? "Configure ESP32"
+                  : "Scan to Connect"}
               </h2>
 
               <p
@@ -388,10 +422,12 @@ const CreateDevice = () => {
                   mb-6
                 "
               >
-                Scan this QR code using the phone that you want to track.
+                {createdDevice.type === "ESP32" || createdDevice.type === "GPS_TRACKER"
+                  ? "Copy these credentials into Rakshak/secrets.h, then upload the sketch to your ESP32."
+                  : "Scan this QR code using the phone that you want to track."}
               </p>
 
-              <div className="flex justify-center">
+              {createdDevice.type !== "ESP32" && createdDevice.type !== "GPS_TRACKER" && <div className="flex justify-center">
                 <div
                   className="
                     p-4
@@ -403,7 +439,16 @@ const CreateDevice = () => {
                 >
                   {qrData && <QRCode value={qrData} size={220} />}
                 </div>
-              </div>
+              </div>}
+
+              {(createdDevice.type === "ESP32" || createdDevice.type === "GPS_TRACKER") && (
+                <div className="space-y-3 rounded-xl bg-slate-50 border p-4">
+                  <div><b>GEOGUARD_DEVICE_PUBLIC_ID</b><p className="font-mono text-xs break-all">{createdDevice.publicId}</p></div>
+                  <div><b>GEOGUARD_DEVICE_KEY (shown once)</b><p className="font-mono text-xs break-all">{deviceKey || "No key issued yet."}</p></div>
+                  {!deviceKey && <button type="button" disabled={keyLoading} onClick={() => handleIssueDeviceKey()} className="rounded-lg bg-blue-600 px-4 py-2 text-white disabled:opacity-60">{keyLoading ? "Generating..." : "Generate IoT Key"}</button>}
+                  <p className="text-sm text-slate-600">Keep this key private. Add both values to secrets.h. The ESP32 sends a GPS update every 10 seconds while it has a fix.</p>
+                </div>
+              )}
 
               <p
                 className="
@@ -413,7 +458,9 @@ const CreateDevice = () => {
                   mt-5
                 "
               >
-                Scan → Open Chrome → Allow Location
+                {createdDevice.type === "ESP32" || createdDevice.type === "GPS_TRACKER"
+                  ? "Power on ESP32 → connect Wi-Fi → wait for GPS fix"
+                  : "Scan → Open Chrome → Allow Location"}
               </p>
             </div>
 
@@ -421,7 +468,7 @@ const CreateDevice = () => {
                 QR URL DEBUG
             ============================== */}
 
-            <div
+            {createdDevice.type !== "ESP32" && createdDevice.type !== "GPS_TRACKER" && <div
               className="
                 bg-gray-50
                 border
@@ -450,7 +497,7 @@ const CreateDevice = () => {
               >
                 {qrData}
               </p>
-            </div>
+            </div>}
 
             {/* ==============================
                 BUTTONS

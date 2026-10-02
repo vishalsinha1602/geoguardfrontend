@@ -12,6 +12,10 @@ export const createDevice = (device) => {
     return axiosInstance.post("/users/devices", device);
 };
 
+export const issueDeviceKey = (publicId) => {
+    return axiosInstance.post(`/users/devices/${publicId}/iot-key`);
+};
+
 export const updateDevice = (publicId, updateData) => {
     return axiosInstance.patch(
         `/users/devices/${publicId}`,

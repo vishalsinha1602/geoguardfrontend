@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 // =========================
 // AUTH
@@ -6,6 +6,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "../Page/auth/Login";
 import Signup from "../Page/auth/Signup";
+import Landing from "../Page/Landing";
+import GuestPreview from "../Page/auth/GuestPreview";
 
 // =========================
 // DASHBOARD
@@ -47,7 +49,7 @@ const AppRoutes = () => {
       {/* ROOT */}
       {/* ========================================= */}
 
-      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/" element={<Landing />} />
 
       {/* ========================================= */}
       {/* PUBLIC AUTH ROUTES */}
@@ -56,6 +58,8 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
 
       <Route path="/signup" element={<Signup />} />
+
+      <Route path="/guest-preview" element={<GuestPreview />} />
 
       {/* ========================================= */}
       {/* QR DEVICE CONNECTION */}

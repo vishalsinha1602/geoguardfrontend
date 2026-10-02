@@ -30,6 +30,14 @@ const refreshOnlyInstance = axios.create({
 // =====================================
 
 axiosInstance.interceptors.request.use((config) => {
+  const publicAuthRequest = ["/auth/login", "/auth/signup", "/auth/refresh"]
+    .some((path) => config.url?.startsWith(path));
+
+  if (publicAuthRequest) {
+    delete config.headers.Authorization;
+    return config;
+  }
+
   const token = localStorage.getItem("accessToken");
 
   if (token) {

@@ -41,6 +41,8 @@ const DeviceForm = ({ initialData, onSubmit }) => {
         <option value="MOBILE">Mobile</option>
         <option value="LAPTOP">Laptop</option>
         <option value="VEHICLE">Vehicle</option>
+        <option value="GPS_TRACKER">GPS Tracker</option>
+        <option value="ESP32">ESP32</option>
       </select>
 
       <br />
